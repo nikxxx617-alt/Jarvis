@@ -1,74 +1,56 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>JARVIS</title>
+  <title>JARVIS Lite iPhone</title>
   <meta name="theme-color" content="#09111f" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="JARVIS" />
-  <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="apple-touch-icon" href="icon-192.png" />
   <style>
     :root{
       --bg:#09111f; --bg2:#0f1a2d; --panel:#111d30; --panel2:#17253b; --line:#31435c;
       --text:#eaf0f9; --muted:#9fb0c6; --cyan:#67e8f9; --blue:#60a5fa; --purple:#a78bfa;
-      --green:#22c55e; --yellow:#f59e0b; --red:#ef4444; --radius:18px;
+      --green:#22c55e; --yellow:#f59e0b; --red:#ef4444;
     }
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     body{
-      margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-      color:var(--text);
+      margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--text);
       background:
         radial-gradient(circle at top left, rgba(103,232,249,.08), transparent 30%),
         radial-gradient(circle at top right, rgba(167,139,250,.10), transparent 28%),
         linear-gradient(180deg,var(--bg),var(--bg2));
       min-height:100vh;
     }
-    .app{max-width:1550px;margin:0 auto;padding:16px;padding-bottom:92px}
-    .hero,.card{
+    .app{max-width:980px;margin:0 auto;padding:14px 14px 110px}
+    .card{
       background:rgba(17,29,48,.94);border:1px solid var(--line);border-radius:22px;
-      box-shadow:0 12px 30px rgba(0,0,0,.22);
+      box-shadow:0 12px 30px rgba(0,0,0,.22);padding:14px;margin-bottom:14px;
     }
-    .hero{padding:16px;margin-bottom:16px}
-    .card{padding:16px}
-    .titlebar{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
-    .brand{display:flex;gap:12px;align-items:center}
+    .brand{display:flex;align-items:center;gap:12px}
     .orb{width:16px;height:16px;border-radius:50%;background:var(--cyan);box-shadow:0 0 16px var(--cyan),0 0 28px rgba(103,232,249,.4)}
     h1,h2,h3{margin:0}
-    .subtitle{margin-top:8px;color:var(--muted);line-height:1.55;max-width:980px}
-    .toolbar,.actions,.tabs,.badges{display:flex;gap:8px;flex-wrap:wrap}
-    .btn,.tab{
+    .subtitle{margin-top:8px;color:var(--muted);line-height:1.5}
+    .tabs,.actions,.badges{display:flex;gap:8px;flex-wrap:wrap}
+    .tab,.btn{
       border:1px solid var(--line);background:var(--panel2);color:var(--text);
-      border-radius:14px;padding:10px 14px;cursor:pointer;font-weight:700
+      border-radius:16px;padding:12px 14px;font-weight:700;cursor:pointer;font-size:16px;
+      touch-action:manipulation;
     }
-    .btn:hover,.tab:hover{filter:brightness(1.06)}
-    .btn.primary{background:linear-gradient(90deg,var(--cyan),var(--blue));color:#05131b}
-    .btn.purple{background:linear-gradient(90deg,var(--purple),var(--blue));color:#07121d}
+    .tab.active{background:linear-gradient(90deg,rgba(103,232,249,.18),rgba(96,165,250,.18));border-color:rgba(103,232,249,.35)}
+    .btn.primary{background:linear-gradient(90deg,var(--cyan),var(--blue));color:#06131b}
     .btn.red{background:linear-gradient(90deg,#fb7185,var(--red));color:#18070a}
-    .btn.ghost{background:transparent}
-    .tabs{margin-top:14px}
-    .tab{border-radius:999px;color:var(--muted)}
-    .tab.active{background:linear-gradient(90deg,rgba(103,232,249,.16),rgba(96,165,250,.16));color:var(--text);border-color:rgba(103,232,249,.35)}
-    .grid2{display:grid;grid-template-columns:360px 1fr;gap:16px}
-    .grid3{display:grid;grid-template-columns:1.25fr 1fr;gap:16px}
-    .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-    .today-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-    .section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+    .btn.purple{background:linear-gradient(90deg,var(--purple),var(--blue));color:#07121d}
+    .hidden{display:none !important}
     label{display:block;margin:10px 0 6px;color:var(--muted);font-size:13px}
-    input,textarea,select{
+    input, textarea, select{
       width:100%;background:rgba(23,37,59,.96);color:var(--text);border:1px solid var(--line);
-      border-radius:14px;padding:11px 12px;font-size:14px;outline:none
+      border-radius:14px;padding:12px;font-size:16px;outline:none
     }
-    textarea{min-height:126px;resize:vertical}
+    textarea{min-height:120px;resize:vertical}
     .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     .list{display:flex;flex-direction:column;gap:10px}
     .item,.task,.box{
       border:1px solid var(--line);border-radius:16px;padding:12px;background:rgba(23,37,59,.72)
     }
-    .item{cursor:pointer}
     .item.active{outline:2px solid rgba(103,232,249,.42)}
     .item-title,.task-title{font-weight:800}
     .task-title{font-size:17px}
@@ -83,287 +65,219 @@
     .b-yellow{background:rgba(245,158,11,.12);color:#fcd34d;border-color:rgba(245,158,11,.25)}
     .b-red{background:rgba(239,68,68,.12);color:#fca5a5;border-color:rgba(239,68,68,.25)}
     .b-gray{background:rgba(148,163,184,.12);color:#d8e0ec;border-color:rgba(148,163,184,.18)}
+    .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     .stat{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:12px}
     .stat-num{font-size:24px;font-weight:900;margin-top:6px}
-    .meta{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin:10px 0}
-    .task-desc{white-space:pre-wrap;line-height:1.5;color:#dce7f5}
-    .hidden{display:none !important}
-    .promptbox{
-      background:linear-gradient(180deg,rgba(103,232,249,.07),rgba(96,165,250,.05));
-      border:1px solid rgba(103,232,249,.22);border-radius:18px;padding:14px;margin-bottom:14px
-    }
-    .parse-preview{border:1px dashed var(--line);border-radius:16px;padding:12px;background:rgba(9,17,31,.5)}
-    .voice-status,.install-box{
-      margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(23,37,59,.72);
-      color:var(--muted);font-size:13px;line-height:1.45
-    }
-    .filters{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px}
-    .calendar-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
-    .calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
-    .weekday{text-align:center;color:var(--muted);font-size:12px;font-weight:800;padding:6px 0}
-    .day{
-      min-height:96px;border:1px solid var(--line);border-radius:14px;padding:8px;background:rgba(23,37,59,.72);cursor:pointer
-    }
-    .day.other{opacity:.38}.day.today{border-color:rgba(103,232,249,.5)}.day.selected{outline:2px solid rgba(103,232,249,.42)}
-    .daynum{font-weight:800;font-size:13px}.dots{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}.dotx{width:8px;height:8px;border-radius:50%}
+    .meta{display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin:10px 0}
+    .task-desc{white-space:pre-wrap;line-height:1.48}
     .footer{
-      position:fixed;bottom:0;left:0;right:0;padding:10px 14px;background:rgba(9,17,31,.9);
-      border-top:1px solid var(--line);backdrop-filter:blur(12px)
+      position:fixed;left:0;right:0;bottom:0;background:rgba(9,17,31,.95);border-top:1px solid var(--line);
+      padding:10px;backdrop-filter:blur(12px)
     }
-    .footer .tabs{margin:0;justify-content:center}
-    .search-results{margin-top:12px}
+    .footer .tabs{justify-content:space-between}
     .small{font-size:12px}.muted{color:var(--muted)}
-    @media (max-width:1180px){.grid2,.grid3,.today-grid{grid-template-columns:1fr}}
-    @media (max-width:780px){.row,.grid4,.filters{grid-template-columns:1fr}.calendar-grid{display:block}.weekday{display:none}.day{margin-bottom:8px}}
+    .calendar-list{display:flex;flex-direction:column;gap:10px}
+    @media (max-width:720px){.row,.stats{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
 <div class="app">
-  <div class="hero">
-    <div class="titlebar">
-      <div>
-        <div class="brand"><div class="orb"></div><h1>JARVIS</h1></div>
-        <div class="subtitle">
-          Полноценный менеджер объектов и задач: папки по объектам, стадии работ, сроки, календарь, поиск, вкладка «Сегодня»,
-          голосовой ввод, умный разбор текста, напоминания и установка на iPhone как веб‑приложение.
-        </div>
-      </div>
-      <div class="toolbar">
-        <button class="btn" id="notifyBtn">Уведомления</button>
-        <button class="btn purple" id="installBtn">Установить</button>
-        <button class="btn" id="exportBtn">Экспорт</button>
-        <button class="btn" id="importBtn">Импорт</button>
-        <button class="btn" id="backupBtn">Резервная копия</button>
-        <button class="btn" id="demoBtn">Демо</button>
-        <input type="file" id="importFile" accept=".json" hidden />
-      </div>
+  <div class="card">
+    <div class="brand"><div class="orb"></div><h1>JARVIS Lite</h1></div>
+    <div class="subtitle">
+      Упрощенная версия для iPhone: без проблемных модулей установки и кэша, с рабочими вкладками, объектами, задачами, поиском и календарным списком.
     </div>
-
-    <div class="tabs top-tabs">
-      <button class="tab active" data-tab="dashboard">Сегодня</button>
-      <button class="tab" data-tab="calendar">Календарь</button>
+    <div class="actions" style="margin-top:12px">
+      <button class="btn" id="notifyBtn">Уведомления</button>
+      <button class="btn" id="exportBtn">Экспорт</button>
+      <button class="btn" id="importBtn">Импорт</button>
+      <button class="btn purple" id="demoBtn">Демо</button>
+      <input type="file" id="importFile" accept=".json" hidden />
+    </div>
+    <div class="tabs" style="margin-top:12px">
+      <button class="tab active" data-tab="today">Сегодня</button>
       <button class="tab" data-tab="objects">Объекты</button>
+      <button class="tab" data-tab="input">Ввод</button>
+      <button class="tab" data-tab="calendar">Календарь</button>
       <button class="tab" data-tab="search">Поиск</button>
-      <button class="tab" data-tab="smart">JARVIS ввод</button>
       <button class="tab" data-tab="settings">Настройки</button>
     </div>
   </div>
 
-  <div id="tab-dashboard" class="tabpage">
-    <div class="today-grid">
-      <div class="card"><div class="section-head"><h2>Сегодня</h2></div><div id="todayBox" class="list"></div></div>
-      <div class="card"><div class="section-head"><h2>Срочно</h2></div><div id="urgentBox" class="list"></div></div>
-      <div class="card"><div class="section-head"><h2>Просрочено</h2></div><div id="overdueBox" class="list"></div></div>
+  <div id="tab-today" class="tabpage">
+    <div class="card">
+      <h2>Сегодня</h2>
+      <div id="todayList" class="list" style="margin-top:12px"></div>
     </div>
-    <div class="card" style="margin-top:16px">
-      <div class="section-head"><h2>Общий обзор</h2></div>
-      <div class="grid4" id="overviewStats"></div>
+    <div class="card">
+      <h2>Срочно</h2>
+      <div id="urgentList" class="list" style="margin-top:12px"></div>
     </div>
-  </div>
-
-  <div id="tab-calendar" class="tabpage hidden">
-    <div class="grid3">
-      <div class="card">
-        <div class="calendar-head">
-          <button class="btn ghost" id="prevMonthBtn">←</button>
-          <h2 id="calendarTitle">Календарь</h2>
-          <button class="btn ghost" id="nextMonthBtn">→</button>
-        </div>
-        <div class="calendar-grid" id="calendarGrid"></div>
-      </div>
-      <div class="card">
-        <div class="section-head"><h2>Задачи на дату</h2></div>
-        <div id="calendarDayTasks"></div>
-      </div>
+    <div class="card">
+      <h2>Просрочено</h2>
+      <div id="overdueList" class="list" style="margin-top:12px"></div>
     </div>
   </div>
 
   <div id="tab-objects" class="tabpage hidden">
-    <div class="grid2">
-      <div class="card">
-        <div class="section-head">
-          <h2>Папки объектов</h2>
-          <button class="btn primary" id="newFolderBtn">+ Объект</button>
-        </div>
-        <div class="list" id="foldersList"></div>
-
-        <div style="margin-top:16px">
-          <label>Название объекта</label>
-          <input id="folderName" placeholder="Например: Склад Галати" />
-          <label>Адрес / место</label>
-          <input id="folderAddress" placeholder="Например: Галати, рядом с портом" />
-          <label>Описание</label>
-          <textarea id="folderDescription" placeholder="Что это за объект и что по нему важно"></textarea>
-          <div class="row">
-            <div><label>Начало</label><input id="folderStart" type="date" /></div>
-            <div><label>Окончание</label><input id="folderEnd" type="date" /></div>
-          </div>
-          <div class="actions">
-            <button class="btn primary" id="saveFolderBtn">Сохранить объект</button>
-            <button class="btn" id="clearFolderBtn">Очистить</button>
-          </div>
-        </div>
+    <div class="card">
+      <div class="actions" style="justify-content:space-between;align-items:center">
+        <h2>Объекты</h2>
+        <button class="btn primary" id="newObjectBtn">+ Объект</button>
       </div>
-
-      <div class="card">
-        <div id="folderContent"><div class="box muted">Выбери объект или добавь задачи через JARVIS ввод.</div></div>
+      <div id="objectsList" class="list" style="margin-top:12px"></div>
+    </div>
+    <div class="card">
+      <h2>Карточка объекта</h2>
+      <label>Название</label>
+      <input id="objName" placeholder="Например: Склад Галати" />
+      <label>Адрес</label>
+      <input id="objAddress" placeholder="Например: Галати" />
+      <label>Описание</label>
+      <textarea id="objDescription" placeholder="Что важно по объекту"></textarea>
+      <div class="row">
+        <div><label>Начало</label><input id="objStart" type="date" /></div>
+        <div><label>Окончание</label><input id="objEnd" type="date" /></div>
       </div>
+      <div class="actions" style="margin-top:12px">
+        <button class="btn primary" id="saveObjectBtn">Сохранить объект</button>
+        <button class="btn" id="clearObjectBtn">Очистить</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Задачи объекта</h2>
+      <div id="objectTasksBox" class="list" style="margin-top:12px"></div>
+    </div>
+  </div>
+
+  <div id="tab-input" class="tabpage hidden">
+    <div class="card">
+      <h2>Умный ввод</h2>
+      <div class="subtitle" style="margin-bottom:10px">
+        Пример: Объект Склад Галати. Сегодня проверить вентиляцию. В пятницу созвон с заказчиком. До 30.04 подготовить смету.
+      </div>
+      <label>Текст</label>
+      <textarea id="smartInput" placeholder="Пиши свободным текстом"></textarea>
+      <div class="actions" style="margin-top:12px">
+        <button class="btn primary" id="parseBtn">Разобрать</button>
+        <button class="btn" id="voiceBtn">🎤 Голос</button>
+        <button class="btn red" id="stopVoiceBtn">■ Стоп</button>
+      </div>
+      <div id="voiceStatus" class="box muted" style="margin-top:12px">Голосовой ввод не активен.</div>
+      <div class="row" style="margin-top:12px">
+        <div><label>Если объект не указан</label><input id="fallbackObject" /></div>
+        <div><label>Ответственный</label><input id="fallbackOwner" /></div>
+      </div>
+      <div class="actions" style="margin-top:12px">
+        <button class="btn primary" id="saveParsedBtn">Сохранить разобранное</button>
+        <button class="btn" id="clearInputBtn">Очистить</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Что понял JARVIS</h2>
+      <div id="parsePreview" class="list" style="margin-top:12px"></div>
+    </div>
+  </div>
+
+  <div id="tab-calendar" class="tabpage hidden">
+    <div class="card">
+      <div class="actions" style="justify-content:space-between;align-items:center">
+        <h2>Календарь</h2>
+        <input id="calendarDate" type="date" style="max-width:220px" />
+      </div>
+      <div id="calendarTasks" class="calendar-list" style="margin-top:12px"></div>
     </div>
   </div>
 
   <div id="tab-search" class="tabpage hidden">
     <div class="card">
-      <div class="section-head"><h2>Поиск по объектам и задачам</h2></div>
-      <div class="row">
-        <div><input id="searchInput" placeholder="Например: смета, Галати, согласование, трубы..." /></div>
-        <div>
-          <select id="searchType">
-            <option value="all">Искать везде</option>
-            <option value="objects">Только объекты</option>
-            <option value="tasks">Только задачи</option>
-          </select>
-        </div>
-      </div>
-      <div class="search-results" id="searchResults"></div>
-    </div>
-  </div>
-
-  <div id="tab-smart" class="tabpage hidden">
-    <div class="grid3">
-      <div class="card">
-        <div class="section-head">
-          <h2>Умный ввод JARVIS</h2>
-          <div class="actions">
-            <button class="btn primary" id="parseBtn">Разобрать</button>
-            <button class="btn" id="voiceBtn">🎤 Голос</button>
-            <button class="btn red" id="stopVoiceBtn">■ Стоп</button>
-          </div>
-        </div>
-        <div class="promptbox">
-          <div style="font-weight:800;margin-bottom:8px">Пиши свободным текстом</div>
-          <div class="small muted">
-            Пример: «Объект Склад Галати. Сегодня проверить вентиляцию. В пятницу в 11:00 созвон с заказчиком.
-            До 30.04 подготовить смету. Отправить документы на согласование. Закупить трубы и муфты».
-          </div>
-        </div>
-        <label>Текст для разбора</label>
-        <textarea id="smartInput" placeholder="Опиши задачи, сроки, стадии, закупки, документы и встречи..."></textarea>
-        <div class="voice-status" id="voiceStatus">Голосовой ввод не активен.</div>
-        <div class="row">
-          <div><label>Если объект не указан</label><input id="fallbackObject" placeholder="Например: ЖК Ставчены" /></div>
-          <div><label>Ответственный по умолчанию</label><input id="fallbackOwner" placeholder="Например: Николай" /></div>
-        </div>
-        <div class="actions">
-          <button class="btn primary" id="saveParsedBtn">Сохранить разобранное</button>
-          <button class="btn" id="clearSmartBtn">Очистить</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="section-head"><h2>Что понял JARVIS</h2></div>
-        <div class="parse-preview" id="parsePreview"><div class="muted">После разбора здесь появится структура.</div></div>
-      </div>
+      <h2>Поиск</h2>
+      <label>Запрос</label>
+      <input id="searchInput" placeholder="Например: смета, Галати, договор" />
+      <label>Где искать</label>
+      <select id="searchType">
+        <option value="all">Везде</option>
+        <option value="objects">Только объекты</option>
+        <option value="tasks">Только задачи</option>
+      </select>
+      <div id="searchResults" class="list" style="margin-top:12px"></div>
     </div>
   </div>
 
   <div id="tab-settings" class="tabpage hidden">
-    <div class="grid3">
-      <div class="card">
-        <div class="section-head"><h2>Настройки</h2></div>
-        <label>Имя пользователя</label>
-        <input id="settingUserName" placeholder="Например: Николай" />
-        <label>Ответственный по умолчанию</label>
-        <input id="settingDefaultOwner" placeholder="Например: Николай" />
-        <label>Название компании</label>
-        <input id="settingCompany" placeholder="Например: Eligibil-Con" />
-        <label>Напоминать заранее</label>
-        <select id="settingReminder">
-          <option value="0">В момент срока</option>
-          <option value="5">За 5 минут</option>
-          <option value="15">За 15 минут</option>
-          <option value="30">За 30 минут</option>
-          <option value="60">За 1 час</option>
-          <option value="1440">За 1 день</option>
-        </select>
-        <div class="actions">
-          <button class="btn primary" id="saveSettingsBtn">Сохранить настройки</button>
-        </div>
+    <div class="card">
+      <h2>Настройки</h2>
+      <label>Имя</label>
+      <input id="settingUserName" />
+      <label>Ответственный по умолчанию</label>
+      <input id="settingDefaultOwner" />
+      <label>Напоминать заранее</label>
+      <select id="settingReminder">
+        <option value="0">В момент срока</option>
+        <option value="5">За 5 минут</option>
+        <option value="15">За 15 минут</option>
+        <option value="30">За 30 минут</option>
+        <option value="60">За 1 час</option>
+        <option value="1440">За 1 день</option>
+      </select>
+      <div class="actions" style="margin-top:12px">
+        <button class="btn primary" id="saveSettingsBtn">Сохранить</button>
       </div>
-
-      <div class="card">
-        <div class="section-head"><h2>Установка на iPhone</h2></div>
-        <div class="install-box">
-          1. Размести папку JARVIS на хостинге или GitHub Pages.<br>
-          2. Открой ссылку в Safari.<br>
-          3. Нажми «Поделиться» → «На экран Домой».<br><br>
-          После этого JARVIS откроется как отдельное приложение.
-        </div>
-        <div class="install-box" id="installStatus">
-          Кнопка «Установить» работает в поддерживаемых браузерах. На iPhone обычно используется установка через Safari вручную.
-        </div>
+      <div class="box muted" style="margin-top:12px">
+        Для добавления на экран iPhone открой сайт в Safari, нажми «Поделиться» и выбери «На экран Домой».
       </div>
     </div>
   </div>
 </div>
 
 <div class="footer">
-  <div class="tabs bottom-tabs">
-    <button class="tab active" data-tab="dashboard">Сегодня</button>
-    <button class="tab" data-tab="calendar">Календарь</button>
+  <div class="tabs">
+    <button class="tab active" data-tab="today">Сегодня</button>
     <button class="tab" data-tab="objects">Объекты</button>
-    <button class="tab" data-tab="smart">Ввод</button>
+    <button class="tab" data-tab="input">Ввод</button>
+    <button class="tab" data-tab="calendar">Календарь</button>
     <button class="tab" data-tab="search">Поиск</button>
   </div>
 </div>
 
 <script>
-const STORAGE_KEY = "jarvis_pwa_v1";
-let deferredPrompt = null;
+const STORAGE_KEY = "jarvis_lite_iphone_v1";
 let recognition = null;
 let recognizing = false;
 
 let state = {
-  folders: [],
-  selectedFolderId: null,
-  editingFolderId: null,
+  objects: [],
+  selectedObjectId: null,
+  editingObjectId: null,
   parsedDraft: null,
-  ui: {
-    selectedTab: "dashboard",
-    calendarMonth: new Date().getMonth(),
-    calendarYear: new Date().getFullYear(),
-    selectedDate: null
-  },
-  settings: {
-    userName: "",
-    defaultOwner: "",
-    company: "",
-    defaultReminder: 60
-  }
+  ui: { tab: "today", calendarDate: "" },
+  settings: { userName: "", defaultOwner: "", defaultReminder: 60 }
 };
 
 function uid(){ return Math.random().toString(36).slice(2) + Date.now().toString(36); }
 function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
-function loadState(){ const raw = localStorage.getItem(STORAGE_KEY); if(raw){ try{ state = JSON.parse(raw); } catch(e){ console.error(e); } } }
+function loadState(){ const raw = localStorage.getItem(STORAGE_KEY); if(raw){ try{ state = JSON.parse(raw); } catch(e){} } }
 function today(){ const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
 function toDateInput(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; }
 function addDays(date, days){ const d = new Date(date); d.setDate(d.getDate()+days); return d; }
 function nextWeekday(dayIndex){ const now=today(); const diff=(dayIndex-now.getDay()+7)%7||7; return addDays(now,diff); }
 function endOfWeek(){ const now=today(); const day=now.getDay()||7; return addDays(now,7-day); }
-function getFolderById(id){ return state.folders.find(f=>f.id===id); }
-function escapeHtml(s){ return String(s||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;"); }
-function formatDateTime(date,time){ if(!date&&!time) return "Без срока"; return [date||"—", time||""].join(" ").trim(); }
-function getPriorityClass(p){ return p==="high"?"b-red":p==="medium"?"b-yellow":"b-green"; }
-function getPriorityLabel(p){ return p==="high"?"Высокий":p==="medium"?"Средний":"Низкий"; }
-function countStats(folder){ const t=folder.tasks||[]; return {all:t.length,open:t.filter(x=>x.status==="open").length,done:t.filter(x=>x.status==="done").length,overdue:t.filter(x=>x.status==="open"&&x.date&&new Date(x.date)<today()).length}; }
-function allTaskEntries(){ return state.folders.flatMap(folder => (folder.tasks||[]).map(task => ({folder,task}))); }
+function getObjectById(id){ return state.objects.find(x => x.id === id); }
+function formatDateTime(date, time){ if(!date&&!time) return "Без срока"; return [date||"—", time||""].join(" ").trim(); }
+function priorityClass(p){ return p==="high"?"b-red":p==="medium"?"b-yellow":"b-green"; }
+function priorityLabel(p){ return p==="high"?"Высокий":p==="medium"?"Средний":"Низкий"; }
+
+function allTasks(){
+  return state.objects.flatMap(obj => (obj.tasks||[]).map(task => ({obj, task})));
+}
 
 function inferStage(text){
   const t=text.toLowerCase();
-  if (/(смет|проект|черт|схем|расчет|расчёт|спецификац|аксонометр|план|вентиляц|канализац|водопровод)/.test(t)) return "Проектирование";
-  if (/(соглас|разреш|документ|подпис|акт|письм|договор|подач|эксперт)/.test(t)) return "Согласования";
+  if (/(смет|проект|черт|схем|расчет|расчёт|спецификац|вентиляц|канализац|водопровод)/.test(t)) return "Проектирование";
+  if (/(соглас|разреш|документ|подпис|акт|письм|договор|подач)/.test(t)) return "Согласования";
   if (/(куп|закуп|материал|трубы|муфт|арматур|кабель|заказат|оборудован)/.test(t)) return "Закупка";
-  if (/(монтаж|демонтаж|прокладк|установ|строит|бетон|сварк|землян|фундамент|гильз)/.test(t)) return "Строительно-монтажные работы";
-  if (/(пуск|налад|испытан|тест|проверить систему|запуск)/.test(t)) return "Пусконаладка";
+  if (/(монтаж|демонтаж|прокладк|установ|строит|бетон|сварк|землян|фундамент)/.test(t)) return "Строительно-монтажные работы";
+  if (/(пуск|налад|испытан|тест|запуск)/.test(t)) return "Пусконаладка";
   if (/(сдать|сдача|ввод в эксплуатац|закрыть объект)/.test(t)) return "Сдача объекта";
   return "Подготовка";
 }
@@ -371,389 +285,434 @@ function inferPriority(text,date){
   const t=text.toLowerCase();
   if (/(срочно|критично|немедленно|сегодня|горит)/.test(t)) return "high";
   if (date){ const diff=(new Date(date)-today())/86400000; if(diff<=1) return "high"; if(diff<=3) return "medium"; }
-  if (/(договор|акт|смет|оплат|заказчик|соглас|разреш|дедлайн|подача)/.test(t)) return "medium";
+  if (/(договор|акт|смет|оплат|заказчик|соглас|разреш|дедлайн)/.test(t)) return "medium";
   return "low";
 }
 function extractObjectName(text, fallback){
-  const patterns=[
-    /(?:объект|по объекту|папка|проект)\s*[:\-]?\s*([A-Za-zА-Яа-яЁё0-9 №"“”«»().,\- ]{3,80})/i,
-    /((?:жк|склад|офис|цех|центр|дом|стройка)\s+[A-Za-zА-Яа-яЁё0-9 №"“”«»().,\- ]{2,70})/i
+  const patterns = [
+    /(?:объект|по объекту|папка|проект)\s*[:\-]?\s*([A-Za-zА-Яа-яЁё0-9 №"«»().,\- ]{3,80})/i,
+    /((?:жк|склад|офис|цех|центр|дом|стройка)\s+[A-Za-zА-Яа-яЁё0-9 №"«»().,\- ]{2,70})/i
   ];
-  for(const p of patterns){ const m=text.match(p); if(m){ const raw=(m[1]||m[0]||"").split(/[.!?\n]/)[0].trim(); if(raw.length>2) return raw.replace(/^["'«»]+|["'«»]+$/g,'').trim(); } }
+  for(const p of patterns){
+    const m=text.match(p);
+    if(m){
+      const raw=(m[1]||m[0]||"").split(/[.!?\n]/)[0].trim();
+      if(raw.length>2) return raw;
+    }
+  }
   return (fallback||"").trim() || "Без названия";
 }
 function parseRelativeDate(part){
-  const p=part.toLowerCase(); let date="", time="";
-  if (p.includes("сегодня")) date=toDateInput(today());
-  else if (p.includes("завтра")) date=toDateInput(addDays(today(),1));
-  else if (p.includes("послезавтра")) date=toDateInput(addDays(today(),2));
-  else if (p.includes("на этой неделе")) date=toDateInput(endOfWeek());
-  else if (p.includes("на следующей неделе")) date=toDateInput(addDays(endOfWeek(),7));
-  const weekdayMap={"понедельник":1,"вторник":2,"среду":3,"среда":3,"четверг":4,"пятницу":5,"пятница":5,"субботу":6,"суббота":6,"воскресенье":0};
-  for(const [word,idx] of Object.entries(weekdayMap)){ if(p.includes(word)){ date=toDateInput(nextWeekday(idx)); break; } }
-  let m=p.match(/\bдо\s+(\d{1,2})[.\-/](\d{1,2})(?:[.\-/](\d{2,4}))?\b/); if(!m) m=p.match(/\b(\d{1,2})[.\-/](\d{1,2})(?:[.\-/](\d{2,4}))?\b/);
-  if(m){ let year=m[3]?Number(m[3]):new Date().getFullYear(); if(year<100) year+=2000; date=toDateInput(new Date(year, Number(m[2])-1, Number(m[1]))); }
-  const months={"января":0,"февраля":1,"марта":2,"апреля":3,"мая":4,"июня":5,"июля":6,"августа":7,"сентября":8,"октября":9,"ноября":10,"декабря":11};
-  const m2=p.match(/\bдо\s+(\d{1,2})\s+(января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря)(?:\s+(\d{4}))?/);
-  if(m2){ const year=m2[3]?Number(m2[3]):new Date().getFullYear(); date=toDateInput(new Date(year, months[m2[2]], Number(m2[1]))); }
-  const tm=p.match(/\bв\s*(\d{1,2})[:.](\d{2})\b/); if(tm) time=`${String(tm[1]).padStart(2,"0")}:${String(tm[2]).padStart(2,"0")}`;
-  return {date,time};
+  const p = part.toLowerCase();
+  let date = "", time = "";
+  if (p.includes("сегодня")) date = toDateInput(today());
+  else if (p.includes("завтра")) date = toDateInput(addDays(today(),1));
+  else if (p.includes("послезавтра")) date = toDateInput(addDays(today(),2));
+  else if (p.includes("на этой неделе")) date = toDateInput(endOfWeek());
+
+  const weekdays = {"понедельник":1,"вторник":2,"среда":3,"среду":3,"четверг":4,"пятница":5,"пятницу":5,"суббота":6,"субботу":6,"воскресенье":0};
+  for(const [word, idx] of Object.entries(weekdays)){ if(p.includes(word)){ date = toDateInput(nextWeekday(idx)); break; } }
+
+  let m = p.match(/\bдо\s+(\d{1,2})[.\-/](\d{1,2})(?:[.\-/](\d{2,4}))?\b/);
+  if(!m) m = p.match(/\b(\d{1,2})[.\-/](\d{1,2})(?:[.\-/](\d{2,4}))?\b/);
+  if(m){
+    let year = m[3] ? Number(m[3]) : new Date().getFullYear();
+    if(year < 100) year += 2000;
+    date = toDateInput(new Date(year, Number(m[2])-1, Number(m[1])));
+  }
+
+  const tm = p.match(/\bв\s*(\d{1,2})[:.](\d{2})\b/);
+  if(tm) time = `${String(tm[1]).padStart(2,"0")}:${String(tm[2]).padStart(2,"0")}`;
+  return {date, time};
 }
 function cleanupTaskTitle(text){
-  return text.replace(/^\s*(объект|по объекту|проект)\s*[:\-]?\s*/i,"")
-    .replace(/\b(сегодня|завтра|послезавтра|на этой неделе|на следующей неделе|до\s+\d{1,2}[.\-/]\d{1,2}(?:[.\-/]\d{2,4})?|до\s+\d{1,2}\s+[а-я]+(?:\s+\d{4})?|в\s*\d{1,2}[:.]\d{2})\b/ig,"")
-    .replace(/\s+/g," ").replace(/^[,;.\- ]+|[,;.\- ]+$/g,"").trim();
+  return text
+    .replace(/^\s*(объект|по объекту|проект)\s*[:\-]?\s*/i,"")
+    .replace(/\b(сегодня|завтра|послезавтра|на этой неделе|до\s+\d{1,2}[.\-/]\d{1,2}(?:[.\-/]\d{2,4})?|в\s*\d{1,2}[:.]\d{2})\b/ig,"")
+    .replace(/\s+/g," ")
+    .replace(/^[,;.\- ]+|[,;.\- ]+$/g,"")
+    .trim();
 }
-function splitIntoTaskParts(text){
-  const normalized=text.replace(/\n+/g,". ").replace(/\s{2,}/g," ").trim();
-  let parts=normalized.split(/(?:\.\s+|;\s+|\n|,\s+(?=(?:надо|нужно|сделать|закупить|подготовить|позвонить|созвон|проверить|согласовать|сдать|отправить|купить|заказать|завершить|закончить|подать|получить|встретиться))))/i).map(s=>s.trim()).filter(Boolean);
-  if(parts.length===1) parts=normalized.split(/\s+\bи\b\s+/i).map(s=>s.trim()).filter(Boolean);
+function splitTasks(text){
+  const normalized = text.replace(/\n+/g, ". ").replace(/\s{2,}/g, " ").trim();
+  let parts = normalized.split(/(?:\.\s+|;\s+|\n|,\s+(?=(?:надо|нужно|сделать|закупить|подготовить|позвонить|созвон|проверить|согласовать|сдать|отправить|купить|заказать|завершить|закончить))))/i)
+    .map(x => x.trim()).filter(Boolean);
+  if(parts.length === 1) parts = normalized.split(/\s+\bи\b\s+/i).map(x => x.trim()).filter(Boolean);
   return parts;
 }
 function parseSmartText(text, fallbackObject, fallbackOwner){
-  const objectName=extractObjectName(text, fallbackObject);
-  const parts=splitIntoTaskParts(text);
-  const tasks=[];
-  for(let part of parts){
-    const {date,time}=parseRelativeDate(part);
-    let title=cleanupTaskTitle(part);
-    if(!title || title.length<3) continue;
-    if (/^(объект|по объекту)\b/i.test(title) && title.split(" ").length < 4) continue;
+  const objectName = extractObjectName(text, fallbackObject);
+  const parts = splitTasks(text);
+  const tasks = [];
+  for(const part of parts){
+    const {date, time} = parseRelativeDate(part);
+    const title = cleanupTaskTitle(part);
+    if(!title || title.length < 3) continue;
     tasks.push({
-      id: uid(), stage: inferStage(title), title: title.charAt(0).toUpperCase()+title.slice(1),
-      description: part.trim(), priority: inferPriority(part,date), status:"open",
-      date, time, remindBefore:Number(state.settings.defaultReminder||60), owner:(fallbackOwner||state.settings.defaultOwner||"").trim(), notified:false
+      id: uid(),
+      stage: inferStage(title),
+      title: title.charAt(0).toUpperCase() + title.slice(1),
+      description: part.trim(),
+      priority: inferPriority(part, date),
+      status: "open",
+      date, time,
+      remindBefore: Number(state.settings.defaultReminder || 60),
+      owner: (fallbackOwner || state.settings.defaultOwner || "").trim(),
+      notified: false
     });
   }
-  return { objectName, tasks, summary:{ tasksCount:tasks.length, stageSet:[...new Set(tasks.map(t=>t.stage))], urgent:tasks.filter(t=>t.priority==="high").length } };
+  return { objectName, tasks };
 }
-function upsertFolderByName(name){
-  let folder=state.folders.find(f=>f.name.toLowerCase()===name.toLowerCase());
-  if(!folder){ folder={id:uid(), name, address:"", description:"", startDate:"", endDate:"", tasks:[], stages:[]}; state.folders.unshift(folder); }
-  return folder;
+function upsertObjectByName(name){
+  let obj = state.objects.find(x => x.name.toLowerCase() === name.toLowerCase());
+  if(!obj){
+    obj = {id: uid(), name, address:"", description:"", startDate:"", endDate:"", tasks:[]};
+    state.objects.unshift(obj);
+  }
+  return obj;
 }
 
-function renderDashboard(){
-  const todayStr=toDateInput(today()); const all=allTaskEntries();
-  const todayItems=all.filter(x=>x.task.status==="open"&&x.task.date===todayStr);
-  const urgentItems=all.filter(x=>x.task.status==="open"&&x.task.priority==="high");
-  const overdueItems=all.filter(x=>x.task.status==="open"&&x.task.date&&new Date(x.task.date)<today());
-  function mini(list,target,empty){
-    const box=document.getElementById(target);
-    if(!list.length){ box.innerHTML=`<div class="box muted">${empty}</div>`; return; }
-    box.innerHTML=list.slice(0,8).map(x=>`
-      <div class="box">
-        <div class="item-title">${escapeHtml(x.task.title)}</div>
-        <div class="sub">${escapeHtml(x.folder.name)} · ${escapeHtml(formatDateTime(x.task.date,x.task.time))}</div>
-        <div class="badges">
-          <span class="badge b-purple">${escapeHtml(x.task.stage)}</span>
-          <span class="badge ${getPriorityClass(x.task.priority)}">${getPriorityLabel(x.task.priority)}</span>
-        </div>
-      </div>`).join("");
-  }
-  mini(todayItems,"todayBox","На сегодня задач нет.");
-  mini(urgentItems,"urgentBox","Срочных задач нет.");
-  mini(overdueItems,"overdueBox","Просроченных задач нет.");
-
-  const tasks=all.length, objects=state.folders.length, done=all.filter(x=>x.task.status==="done").length, open=all.filter(x=>x.task.status==="open").length;
-  document.getElementById("overviewStats").innerHTML = `
-    <div class="stat"><div class="sub">Объекты</div><div class="stat-num">${objects}</div></div>
-    <div class="stat"><div class="sub">Все задачи</div><div class="stat-num">${tasks}</div></div>
-    <div class="stat"><div class="sub">Активные</div><div class="stat-num">${open}</div></div>
-    <div class="stat"><div class="sub">Выполнено</div><div class="stat-num">${done}</div></div>`;
-}
-function renderFolders(){
-  const box=document.getElementById("foldersList"); box.innerHTML="";
-  if(!state.folders.length){ box.innerHTML='<div class="box muted">Пока нет объектов. Добавь их вручную или через JARVIS ввод.</div>'; return; }
-  state.folders.forEach(folder=>{
-    const s=countStats(folder);
-    const el=document.createElement("div"); el.className="item"+(folder.id===state.selectedFolderId?" active":"");
-    el.innerHTML=`<div class="item-title">${escapeHtml(folder.name)}</div><div class="sub">${escapeHtml(folder.address||"Без адреса")}</div>
-      <div class="badges"><span class="badge b-cyan">${(folder.stages||[]).length} стадий</span><span class="badge b-green">${s.open} активных</span><span class="badge b-gray">${s.done} выполнено</span></div>`;
-    el.onclick=()=>{ state.selectedFolderId=folder.id; saveState(); renderAll(); switchTab("objects"); };
-    box.appendChild(el);
-  });
-}
-function renderFolderContent(){
-  const container=document.getElementById("folderContent"); const folder=getFolderById(state.selectedFolderId);
-  if(!folder){ container.innerHTML='<div class="box muted">Выбери объект или создай новый.</div>'; return; }
-  const s=countStats(folder); const stageOptions=["all", ...new Set((folder.tasks||[]).map(t=>t.stage))];
-  container.innerHTML=`
-    <div class="section-head">
-      <div><h2>${escapeHtml(folder.name)}</h2><div class="sub">${escapeHtml(folder.address||"Без адреса")}</div><div class="sub">${escapeHtml(folder.description||"")}</div></div>
-      <div class="actions"><button class="btn" id="editFolderBtn">Редактировать</button><button class="btn red" id="deleteFolderBtn">Удалить</button></div>
-    </div>
-    <div class="grid4">
-      <div class="stat"><div class="sub">Всего</div><div class="stat-num">${s.all}</div></div>
-      <div class="stat"><div class="sub">Активные</div><div class="stat-num">${s.open}</div></div>
-      <div class="stat"><div class="sub">Выполнено</div><div class="stat-num">${s.done}</div></div>
-      <div class="stat"><div class="sub">Просрочено</div><div class="stat-num">${s.overdue}</div></div>
-    </div>
-    <div class="filters">
-      <select id="filterStage">${stageOptions.map(x=>`<option value="${x}">${x==="all"?"Все стадии":escapeHtml(x)}</option>`).join("")}</select>
-      <select id="filterPriority"><option value="all">Все приоритеты</option><option value="high">Высокий</option><option value="medium">Средний</option><option value="low">Низкий</option></select>
-      <select id="filterStatus"><option value="all">Все статусы</option><option value="open">Открыта</option><option value="done">Выполнена</option></select>
-    </div>
-    <div class="list" id="tasksList"></div>`;
-  document.getElementById("editFolderBtn").onclick=()=>fillFolderForm(folder);
-  document.getElementById("deleteFolderBtn").onclick=()=>deleteFolder(folder.id);
-  ["filterStage","filterPriority","filterStatus"].forEach(id=>document.getElementById(id).onchange=renderTasksOnly);
-  renderTasksOnly();
-}
-function renderTasksOnly(){
-  const folder=getFolderById(state.selectedFolderId); const list=document.getElementById("tasksList"); if(!folder||!list) return;
-  const stage=document.getElementById("filterStage").value, priority=document.getElementById("filterPriority").value, status=document.getElementById("filterStatus").value;
-  let tasks=[...(folder.tasks||[])];
-  tasks=tasks.filter(t=>stage==="all"||t.stage===stage).filter(t=>priority==="all"||t.priority===priority).filter(t=>status==="all"||t.status===status);
-  tasks.sort((a,b)=>{ const pa={high:0,medium:1,low:2}[a.priority]??3, pb={high:0,medium:1,low:2}[b.priority]??3; if(pa!==pb) return pa-pb; const da=a.date?new Date(a.date+"T"+(a.time||"23:59")).getTime():Infinity, db=b.date?new Date(b.date+"T"+(b.time||"23:59")).getTime():Infinity; return da-db; });
-  if(!tasks.length){ list.innerHTML='<div class="box muted">По выбранным фильтрам задач нет.</div>'; return; }
-  list.innerHTML=tasks.map(task=>`
-    <div class="task">
-      <div class="task-title">${escapeHtml(task.title)}</div>
-      <div class="badges">
-        <span class="badge b-purple">${escapeHtml(task.stage)}</span>
-        <span class="badge ${getPriorityClass(task.priority)}">${getPriorityLabel(task.priority)}</span>
-        <span class="badge ${task.status==="done"?"b-green":"b-gray"}">${task.status==="done"?"Выполнена":"Открыта"}</span>
-      </div>
-      <div class="meta"><span>Срок: ${escapeHtml(formatDateTime(task.date,task.time))}</span><span>Ответственный: ${escapeHtml(task.owner||"—")}</span></div>
-      <div class="task-desc">${escapeHtml(task.description||"Без описания")}</div>
-      <div class="actions">
-        <button class="btn" onclick="toggleTaskStatus('${task.id}')">${task.status==="done"?"Открыть снова":"Выполнено"}</button>
-        <button class="btn" onclick="editTaskText('${task.id}')">Править</button>
-        <button class="btn red" onclick="deleteTask('${task.id}')">Удалить</button>
-      </div>
-    </div>`).join("");
-}
-function renderParsePreview(){
-  const box=document.getElementById("parsePreview"); const draft=state.parsedDraft;
-  if(!draft){ box.innerHTML='<div class="muted">После разбора здесь появится структура.</div>'; return; }
-  box.innerHTML=`<div><strong>Объект:</strong> ${escapeHtml(draft.objectName)}</div>
-    <div class="sub" style="margin-top:6px">Найдено задач: ${draft.summary.tasksCount} · Срочных: ${draft.summary.urgent} · Стадии: ${escapeHtml(draft.summary.stageSet.join(", ")||"—")}</div>
-    <div class="list" style="margin-top:12px">${draft.tasks.map(t=>`
-      <div class="item" style="cursor:default">
-        <div class="item-title">${escapeHtml(t.title)}</div>
-        <div class="sub">${escapeHtml(t.description)}</div>
-        <div class="badges">
-          <span class="badge b-purple">${escapeHtml(t.stage)}</span>
-          <span class="badge ${getPriorityClass(t.priority)}">${getPriorityLabel(t.priority)}</span>
-          <span class="badge b-blue">${escapeHtml(formatDateTime(t.date,t.time))}</span>
-        </div>
-      </div>`).join("")}</div>`;
-}
-function renderSearch(){
-  const query=(document.getElementById("searchInput").value||"").trim().toLowerCase(); const type=document.getElementById("searchType").value; const box=document.getElementById("searchResults");
-  if(!query){ box.innerHTML='<div class="box muted">Введи слово для поиска.</div>'; return; }
-  const results=[];
-  if(type==="all"||type==="objects"){
-    state.folders.forEach(folder=>{ const hay=`${folder.name} ${folder.address} ${folder.description}`.toLowerCase(); if(hay.includes(query)) results.push({kind:"Объект", title:folder.name, sub:folder.address||"Без адреса", extra:folder.description||""}); });
-  }
-  if(type==="all"||type==="tasks"){
-    state.folders.forEach(folder=>(folder.tasks||[]).forEach(task=>{ const hay=`${task.title} ${task.description} ${task.stage} ${task.owner}`.toLowerCase(); if(hay.includes(query)) results.push({kind:"Задача", title:task.title, sub:`${folder.name} · ${formatDateTime(task.date,task.time)}`, extra:task.description, priority:task.priority}); }));
-  }
-  if(!results.length){ box.innerHTML='<div class="box muted">Ничего не найдено.</div>'; return; }
-  box.innerHTML=results.map(r=>`<div class="box"><div class="item-title">${escapeHtml(r.title)}</div><div class="sub">${escapeHtml(r.kind)} · ${escapeHtml(r.sub||"")}</div>${r.extra?`<div class="sub" style="margin-top:6px">${escapeHtml(r.extra)}</div>`:""}${r.priority?`<div class="badges"><span class="badge ${getPriorityClass(r.priority)}">${getPriorityLabel(r.priority)}</span></div>`:""}</div>`).join("");
-}
-function renderCalendar(){
-  const grid=document.getElementById("calendarGrid"), title=document.getElementById("calendarTitle"), dayTasks=document.getElementById("calendarDayTasks");
-  const year=state.ui.calendarYear, month=state.ui.calendarMonth, monthNames=["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];
-  title.textContent=`${monthNames[month]} ${year}`;
-  const first=new Date(year,month,1), start=new Date(first); start.setDate(1-((first.getDay()+6)%7));
-  const selected=state.ui.selectedDate||toDateInput(today()); const all=allTaskEntries();
-  let html=""; ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"].forEach(w=>html+=`<div class="weekday">${w}</div>`);
-  for(let i=0;i<42;i++){
-    const d=addDays(start,i), ds=toDateInput(d), items=all.filter(x=>x.task.date===ds), isOther=d.getMonth()!==month, isToday=ds===toDateInput(today()), isSelected=ds===selected;
-    html+=`<div class="day ${isOther?"other":""} ${isToday?"today":""} ${isSelected?"selected":""}" data-date="${ds}">
-      <div class="daynum">${d.getDate()}</div><div class="dots">${items.slice(0,6).map(x=>`<div class="dotx" style="background:${x.task.priority==="high"?"#ef4444":x.task.priority==="medium"?"#f59e0b":"#22c55e"}"></div>`).join("")}</div>
-      <div class="small muted" style="margin-top:8px">${items.length?`${items.length} задач`:""}</div></div>`;
-  }
-  grid.innerHTML=html;
-  Array.from(grid.querySelectorAll(".day")).forEach(el=>el.onclick=()=>{ state.ui.selectedDate=el.dataset.date; saveState(); renderCalendar(); });
-  const items=all.filter(x=>x.task.date===selected).sort((a,b)=>(a.task.time||"23:59").localeCompare(b.task.time||"23:59"));
-  dayTasks.innerHTML=items.length?items.map(x=>`<div class="task"><div class="task-title">${escapeHtml(x.task.title)}</div><div class="sub">${escapeHtml(x.folder.name)} · ${escapeHtml(x.task.stage)}</div><div class="badges"><span class="badge ${getPriorityClass(x.task.priority)}">${getPriorityLabel(x.task.priority)}</span><span class="badge b-blue">${escapeHtml(formatDateTime(x.task.date,x.task.time))}</span></div></div>`).join(""):`<div class="box muted">На ${selected} задач нет.</div>`;
-}
-function renderSettings(){
-  document.getElementById("settingUserName").value=state.settings.userName||"";
-  document.getElementById("settingDefaultOwner").value=state.settings.defaultOwner||"";
-  document.getElementById("settingCompany").value=state.settings.company||"";
-  document.getElementById("settingReminder").value=String(state.settings.defaultReminder||60);
-}
-function saveSettings(){
-  state.settings.userName=document.getElementById("settingUserName").value.trim();
-  state.settings.defaultOwner=document.getElementById("settingDefaultOwner").value.trim();
-  state.settings.company=document.getElementById("settingCompany").value.trim();
-  state.settings.defaultReminder=Number(document.getElementById("settingReminder").value);
-  saveState();
-  alert("Настройки сохранены.");
-}
 function switchTab(tab){
-  state.ui.selectedTab=tab;
-  document.querySelectorAll(".tab").forEach(el=>el.classList.toggle("active", el.dataset.tab===tab));
-  document.querySelectorAll(".tabpage").forEach(el=>el.classList.add("hidden"));
-  document.getElementById("tab-"+tab).classList.remove("hidden");
+  state.ui.tab = tab;
+  document.querySelectorAll(".tab").forEach(el => el.classList.toggle("active", el.dataset.tab === tab));
+  document.querySelectorAll(".tabpage").forEach(el => el.classList.add("hidden"));
+  document.getElementById("tab-" + tab).classList.remove("hidden");
   saveState();
-  if(tab==="calendar") renderCalendar();
-  if(tab==="search") renderSearch();
-  if(tab==="settings") renderSettings();
+  if(tab === "calendar") renderCalendar();
+  if(tab === "search") renderSearch();
+  if(tab === "settings") renderSettings();
 }
-function bindTabs(){ document.querySelectorAll(".tab").forEach(el=>el.onclick=()=>switchTab(el.dataset.tab)); }
+function renderToday(){
+  const todayStr = toDateInput(today());
+  const tasks = allTasks();
+  const todayItems = tasks.filter(x => x.task.status === "open" && x.task.date === todayStr);
+  const urgentItems = tasks.filter(x => x.task.status === "open" && x.task.priority === "high");
+  const overdueItems = tasks.filter(x => x.task.status === "open" && x.task.date && new Date(x.task.date) < today());
 
-function fillFolderForm(folder){
-  state.editingFolderId=folder.id;
-  document.getElementById("folderName").value=folder.name||"";
-  document.getElementById("folderAddress").value=folder.address||"";
-  document.getElementById("folderDescription").value=folder.description||"";
-  document.getElementById("folderStart").value=folder.startDate||"";
-  document.getElementById("folderEnd").value=folder.endDate||"";
+  function fill(targetId, items, emptyText){
+    const el = document.getElementById(targetId);
+    if(!items.length){ el.innerHTML = `<div class="box muted">${emptyText}</div>`; return; }
+    el.innerHTML = items.slice(0,10).map(x => `
+      <div class="task">
+        <div class="task-title">${x.task.title}</div>
+        <div class="meta"><span>${x.obj.name}</span><span>${formatDateTime(x.task.date, x.task.time)}</span></div>
+        <div class="badges">
+          <span class="badge b-purple">${x.task.stage}</span>
+          <span class="badge ${priorityClass(x.task.priority)}">${priorityLabel(x.task.priority)}</span>
+        </div>
+      </div>
+    `).join("");
+  }
+  fill("todayList", todayItems, "На сегодня задач нет.");
+  fill("urgentList", urgentItems, "Срочных задач нет.");
+  fill("overdueList", overdueItems, "Просроченных задач нет.");
 }
-function clearFolderForm(){
-  state.editingFolderId=null;
-  ["folderName","folderAddress","folderDescription","folderStart","folderEnd"].forEach(id=>document.getElementById(id).value="");
+function renderObjects(){
+  const list = document.getElementById("objectsList");
+  if(!state.objects.length){ list.innerHTML = '<div class="box muted">Пока нет объектов.</div>'; }
+  else {
+    list.innerHTML = state.objects.map(obj => `
+      <div class="item ${obj.id === state.selectedObjectId ? 'active' : ''}" data-id="${obj.id}">
+        <div class="item-title">${obj.name}</div>
+        <div class="sub">${obj.address || "Без адреса"}</div>
+        <div class="badges"><span class="badge b-cyan">${(obj.tasks||[]).length} задач</span></div>
+      </div>
+    `).join("");
+    Array.from(list.querySelectorAll(".item")).forEach(el => {
+      el.onclick = () => {
+        state.selectedObjectId = el.dataset.id;
+        saveState();
+        renderObjects();
+        renderObjectTasks();
+      };
+    });
+  }
+  renderObjectTasks();
 }
-function saveFolder(){
-  const name=document.getElementById("folderName").value.trim(); if(!name){ alert("Введите название объекта."); return; }
-  const data={name, address:document.getElementById("folderAddress").value.trim(), description:document.getElementById("folderDescription").value.trim(), startDate:document.getElementById("folderStart").value, endDate:document.getElementById("folderEnd").value};
-  if(state.editingFolderId) Object.assign(getFolderById(state.editingFolderId), data);
-  else { const folder={id:uid(), ...data, tasks:[], stages:[]}; state.folders.unshift(folder); state.selectedFolderId=folder.id; }
-  saveState(); clearFolderForm(); renderAll(); switchTab("objects");
+function renderObjectTasks(){
+  const box = document.getElementById("objectTasksBox");
+  const obj = getObjectById(state.selectedObjectId);
+  if(!obj){ box.innerHTML = '<div class="box muted">Выбери объект.</div>'; return; }
+
+  document.getElementById("objName").value = obj.name || "";
+  document.getElementById("objAddress").value = obj.address || "";
+  document.getElementById("objDescription").value = obj.description || "";
+  document.getElementById("objStart").value = obj.startDate || "";
+  document.getElementById("objEnd").value = obj.endDate || "";
+
+  if(!(obj.tasks||[]).length){ box.innerHTML = '<div class="box muted">У этого объекта пока нет задач.</div>'; return; }
+  box.innerHTML = obj.tasks.map(task => `
+    <div class="task">
+      <div class="task-title">${task.title}</div>
+      <div class="badges">
+        <span class="badge b-purple">${task.stage}</span>
+        <span class="badge ${priorityClass(task.priority)}">${priorityLabel(task.priority)}</span>
+        <span class="badge ${task.status === 'done' ? 'b-green' : 'b-gray'}">${task.status === 'done' ? 'Выполнена' : 'Открыта'}</span>
+      </div>
+      <div class="meta"><span>${formatDateTime(task.date, task.time)}</span><span>${task.owner || "—"}</span></div>
+      <div class="task-desc">${task.description || ""}</div>
+      <div class="actions" style="margin-top:12px">
+        <button class="btn" onclick="toggleTask('${obj.id}','${task.id}')">${task.status === 'done' ? 'Открыть снова' : 'Выполнено'}</button>
+        <button class="btn red" onclick="deleteTask('${obj.id}','${task.id}')">Удалить</button>
+      </div>
+    </div>
+  `).join("");
 }
-function deleteFolder(id){
-  if(!confirm("Удалить объект вместе со всеми задачами?")) return;
-  state.folders=state.folders.filter(f=>f.id!==id); if(state.selectedFolderId===id) state.selectedFolderId=state.folders[0]?.id||null;
+window.toggleTask = function(objId, taskId){
+  const obj = getObjectById(objId); if(!obj) return;
+  const task = obj.tasks.find(t => t.id === taskId); if(!task) return;
+  task.status = task.status === "done" ? "open" : "done";
   saveState(); renderAll();
 }
-window.toggleTaskStatus=function(taskId){
-  const folder=getFolderById(state.selectedFolderId); const task=folder?.tasks.find(t=>t.id===taskId); if(!task) return;
-  task.status=task.status==="done"?"open":"done"; saveState(); renderAll();
+window.deleteTask = function(objId, taskId){
+  const obj = getObjectById(objId); if(!obj) return;
+  obj.tasks = obj.tasks.filter(t => t.id !== taskId);
+  saveState(); renderAll();
 }
-window.deleteTask=function(taskId){
-  const folder=getFolderById(state.selectedFolderId); if(!folder) return; if(!confirm("Удалить задачу?")) return;
-  folder.tasks=folder.tasks.filter(t=>t.id!==taskId); folder.stages=[...new Set(folder.tasks.map(t=>t.stage))]; saveState(); renderAll();
+function saveObject(){
+  const data = {
+    name: document.getElementById("objName").value.trim(),
+    address: document.getElementById("objAddress").value.trim(),
+    description: document.getElementById("objDescription").value.trim(),
+    startDate: document.getElementById("objStart").value,
+    endDate: document.getElementById("objEnd").value
+  };
+  if(!data.name){ alert("Введите название объекта."); return; }
+
+  if(state.selectedObjectId){
+    Object.assign(getObjectById(state.selectedObjectId), data);
+  } else {
+    const obj = { id: uid(), ...data, tasks: [] };
+    state.objects.unshift(obj);
+    state.selectedObjectId = obj.id;
+  }
+  saveState(); renderAll();
 }
-window.editTaskText=function(taskId){
-  const folder=getFolderById(state.selectedFolderId); const task=folder?.tasks.find(t=>t.id===taskId); if(!task) return;
-  document.getElementById("smartInput").value=task.description; document.getElementById("fallbackObject").value=folder.name; document.getElementById("fallbackOwner").value=task.owner||state.settings.defaultOwner||"";
-  switchTab("smart"); alert("Текст задачи подставлен в JARVIS ввод.");
+function clearObjectForm(){
+  state.selectedObjectId = null;
+  ["objName","objAddress","objDescription","objStart","objEnd"].forEach(id => document.getElementById(id).value = "");
+  renderObjectTasks();
 }
-function runParse(){
-  const text=document.getElementById("smartInput").value.trim(); if(!text){ alert("Введи или продиктуй текст."); return; }
-  state.parsedDraft=parseSmartText(text, document.getElementById("fallbackObject").value, document.getElementById("fallbackOwner").value || state.settings.defaultOwner);
+function parseInput(){
+  const text = document.getElementById("smartInput").value.trim();
+  if(!text){ alert("Введи текст."); return; }
+  state.parsedDraft = parseSmartText(text, document.getElementById("fallbackObject").value, document.getElementById("fallbackOwner").value);
   renderParsePreview();
 }
-function clearSmart(){
-  ["smartInput","fallbackObject","fallbackOwner"].forEach(id=>document.getElementById(id).value="");
-  state.parsedDraft=null; renderParsePreview();
+function renderParsePreview(){
+  const box = document.getElementById("parsePreview");
+  const draft = state.parsedDraft;
+  if(!draft || !draft.tasks.length){ box.innerHTML = '<div class="box muted">После разбора здесь появятся задачи.</div>'; return; }
+  box.innerHTML = draft.tasks.map(task => `
+    <div class="task">
+      <div class="task-title">${task.title}</div>
+      <div class="sub">${draft.objectName}</div>
+      <div class="badges">
+        <span class="badge b-purple">${task.stage}</span>
+        <span class="badge ${priorityClass(task.priority)}">${priorityLabel(task.priority)}</span>
+        <span class="badge b-blue">${formatDateTime(task.date, task.time)}</span>
+      </div>
+    </div>
+  `).join("");
 }
-function saveParsedDraft(){
+function saveParsed(){
   if(!state.parsedDraft || !state.parsedDraft.tasks.length){ alert("Сначала разберите текст."); return; }
-  const folder=upsertFolderByName(state.parsedDraft.objectName);
-  folder.tasks.unshift(...state.parsedDraft.tasks); folder.stages=[...new Set(folder.tasks.map(t=>t.stage))];
-  state.selectedFolderId=folder.id; saveState(); renderAll(); switchTab("objects"); alert("JARVIS сохранил задачи в объект.");
+  const obj = upsertObjectByName(state.parsedDraft.objectName);
+  obj.tasks.unshift(...state.parsedDraft.tasks);
+  state.selectedObjectId = obj.id;
+  saveState(); renderAll(); switchTab("objects");
+}
+function clearInput(){
+  ["smartInput","fallbackObject","fallbackOwner"].forEach(id => document.getElementById(id).value = "");
+  state.parsedDraft = null;
+  renderParsePreview();
+}
+function renderCalendar(){
+  const date = document.getElementById("calendarDate").value || state.ui.calendarDate || toDateInput(today());
+  state.ui.calendarDate = date;
+  document.getElementById("calendarDate").value = date;
+  const box = document.getElementById("calendarTasks");
+  const items = allTasks().filter(x => x.task.date === date);
+  if(!items.length){ box.innerHTML = '<div class="box muted">На эту дату задач нет.</div>'; }
+  else {
+    box.innerHTML = items.map(x => `
+      <div class="task">
+        <div class="task-title">${x.task.title}</div>
+        <div class="meta"><span>${x.obj.name}</span><span>${formatDateTime(x.task.date, x.task.time)}</span></div>
+        <div class="badges">
+          <span class="badge b-purple">${x.task.stage}</span>
+          <span class="badge ${priorityClass(x.task.priority)}">${priorityLabel(x.task.priority)}</span>
+        </div>
+      </div>
+    `).join("");
+  }
+  saveState();
+}
+function renderSearch(){
+  const q = (document.getElementById("searchInput").value || "").trim().toLowerCase();
+  const type = document.getElementById("searchType").value;
+  const box = document.getElementById("searchResults");
+  if(!q){ box.innerHTML = '<div class="box muted">Введите слово для поиска.</div>'; return; }
+  const results = [];
+  if(type === "all" || type === "objects"){
+    state.objects.forEach(obj => {
+      const hay = `${obj.name} ${obj.address} ${obj.description}`.toLowerCase();
+      if(hay.includes(q)) results.push({kind:"Объект", title:obj.name, sub:obj.address || "Без адреса"});
+    });
+  }
+  if(type === "all" || type === "tasks"){
+    state.objects.forEach(obj => (obj.tasks||[]).forEach(task => {
+      const hay = `${task.title} ${task.description} ${task.stage} ${task.owner}`.toLowerCase();
+      if(hay.includes(q)) results.push({kind:"Задача", title:task.title, sub:`${obj.name} · ${formatDateTime(task.date, task.time)}`});
+    }));
+  }
+  if(!results.length){ box.innerHTML = '<div class="box muted">Ничего не найдено.</div>'; }
+  else {
+    box.innerHTML = results.map(r => `
+      <div class="box">
+        <div class="item-title">${r.title}</div>
+        <div class="sub">${r.kind} · ${r.sub}</div>
+      </div>
+    `).join("");
+  }
+}
+function renderSettings(){
+  document.getElementById("settingUserName").value = state.settings.userName || "";
+  document.getElementById("settingDefaultOwner").value = state.settings.defaultOwner || "";
+  document.getElementById("settingReminder").value = String(state.settings.defaultReminder || 60);
+}
+function saveSettings(){
+  state.settings.userName = document.getElementById("settingUserName").value.trim();
+  state.settings.defaultOwner = document.getElementById("settingDefaultOwner").value.trim();
+  state.settings.defaultReminder = Number(document.getElementById("settingReminder").value);
+  saveState();
+  alert("Настройки сохранены.");
 }
 
 function requestNotifications(){
   if(!("Notification" in window)){ alert("Этот браузер не поддерживает уведомления."); return; }
-  Notification.requestPermission().then(p=>alert(p==="granted"?"Уведомления включены.":"Разрешение не выдано."));
+  Notification.requestPermission().then(p => alert(p === "granted" ? "Уведомления включены." : "Разрешение не выдано."));
 }
 function checkReminders(){
-  if(!("Notification" in window) || Notification.permission!=="granted") return;
-  const now=Date.now();
-  state.folders.forEach(folder=>(folder.tasks||[]).forEach(task=>{
-    if(task.status==="done" || !task.date) return;
-    const due=new Date(task.date+"T"+(task.time||"09:00")).getTime(), remindAt=due-Number(task.remindBefore||0)*60000;
-    if(!task.notified && now>=remindAt && now<=due+5*60000){
-      new Notification("JARVIS напоминает", { body: `${folder.name}: ${task.title} · ${formatDateTime(task.date, task.time)}` });
-      task.notified=true;
+  if(!("Notification" in window) || Notification.permission !== "granted") return;
+  const now = Date.now();
+  state.objects.forEach(obj => (obj.tasks||[]).forEach(task => {
+    if(task.status === "done" || !task.date) return;
+    const due = new Date(task.date + "T" + (task.time || "09:00")).getTime();
+    const remindAt = due - Number(task.remindBefore || 0) * 60000;
+    if(!task.notified && now >= remindAt && now <= due + 5*60000){
+      new Notification("JARVIS напоминает", { body: `${obj.name}: ${task.title}` });
+      task.notified = true;
     }
   }));
   saveState();
 }
-function exportData(filename="jarvis_data.json"){
-  const blob=new Blob([JSON.stringify(state,null,2)], {type:"application/json"});
-  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=filename; a.click();
+function exportData(){
+  const blob = new Blob([JSON.stringify(state, null, 2)], {type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "jarvis_lite_iphone_data.json";
+  a.click();
 }
 function importData(file){
-  const reader=new FileReader();
-  reader.onload=e=>{ try{ const parsed=JSON.parse(e.target.result); if(!parsed.folders) throw new Error("bad"); state=parsed; saveState(); renderAll(); alert("Данные импортированы."); }catch(err){ alert("Не удалось импортировать файл."); } };
+  const reader = new FileReader();
+  reader.onload = e => {
+    try{
+      const parsed = JSON.parse(e.target.result);
+      if(!parsed.objects) throw new Error("bad");
+      state = parsed;
+      saveState();
+      renderAll();
+      alert("Данные импортированы.");
+    } catch(err){
+      alert("Не удалось импортировать файл.");
+    }
+  };
   reader.readAsText(file);
 }
-function backupData(){ exportData("jarvis_backup_"+new Date().toISOString().slice(0,10)+".json"); }
-
 function seedData(){
-  const demo=`Объект Склад Галати. Сегодня проверить вентиляцию. В пятницу в 11:00 созвон с заказчиком. До 30.04 подготовить смету. Отправить документы на согласование. Закупить трубы и муфты.`;
-  document.getElementById("smartInput").value=demo; document.getElementById("fallbackOwner").value=state.settings.defaultOwner||"Николай";
-  state.parsedDraft=parseSmartText(demo, "", document.getElementById("fallbackOwner").value); renderParsePreview(); switchTab("smart");
+  const text = "Объект Склад Галати. Сегодня проверить вентиляцию. В пятницу в 11:00 созвон с заказчиком. До 30.04 подготовить смету. Закупить трубы и муфты.";
+  document.getElementById("smartInput").value = text;
+  document.getElementById("fallbackOwner").value = state.settings.defaultOwner || "Николай";
+  state.parsedDraft = parseSmartText(text, "", document.getElementById("fallbackOwner").value);
+  renderParsePreview();
+  switchTab("input");
 }
-
-function setupVoiceInput(){
-  const status=document.getElementById("voiceStatus"); const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){ status.textContent="Голосовой ввод доступен не во всех браузерах. На компьютере лучше использовать Chrome."; document.getElementById("voiceBtn").disabled=true; document.getElementById("stopVoiceBtn").disabled=true; return; }
-  recognition=new SR(); recognition.lang="ru-RU"; recognition.interimResults=true; recognition.continuous=true;
-  recognition.onstart=()=>{ recognizing=true; status.textContent="JARVIS слушает..."; };
-  recognition.onend=()=>{ recognizing=false; status.textContent="Голосовой ввод остановлен."; };
-  recognition.onerror=e=>{ status.textContent="Ошибка голосового ввода: "+(e.error||"неизвестно"); };
-  recognition.onresult=e=>{
-    let finalText="", interimText="";
-    for(let i=e.resultIndex;i<e.results.length;i++){ const t=e.results[i][0].transcript; if(e.results[i].isFinal) finalText+=t+" "; else interimText+=t+" "; }
-    const area=document.getElementById("smartInput"); if(finalText) area.value=(area.value+" "+finalText).replace(/\s+/g," ").trim();
-    status.textContent=interimText ? "JARVIS слушает... "+interimText.trim() : "Фраза добавлена.";
+function setupVoice(){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const status = document.getElementById("voiceStatus");
+  if(!SR){
+    status.textContent = "Голосовой ввод может не поддерживаться в этом браузере.";
+    document.getElementById("voiceBtn").disabled = true;
+    document.getElementById("stopVoiceBtn").disabled = true;
+    return;
+  }
+  recognition = new SR();
+  recognition.lang = "ru-RU";
+  recognition.interimResults = true;
+  recognition.continuous = true;
+  recognition.onstart = () => { recognizing = true; status.textContent = "JARVIS слушает..."; };
+  recognition.onend = () => { recognizing = false; status.textContent = "Голосовой ввод остановлен."; };
+  recognition.onerror = e => { status.textContent = "Ошибка: " + (e.error || "неизвестно"); };
+  recognition.onresult = e => {
+    let finalText = "", interim = "";
+    for(let i = e.resultIndex; i < e.results.length; i++){
+      const t = e.results[i][0].transcript;
+      if(e.results[i].isFinal) finalText += t + " ";
+      else interim += t + " ";
+    }
+    const area = document.getElementById("smartInput");
+    if(finalText) area.value = (area.value + " " + finalText).replace(/\s+/g, " ").trim();
+    status.textContent = interim ? "JARVIS слушает... " + interim.trim() : "Фраза добавлена.";
   };
 }
 function startVoice(){ if(recognition && !recognizing) recognition.start(); }
 function stopVoice(){ if(recognition && recognizing) recognition.stop(); }
 
-function initInstallPrompt(){
-  window.addEventListener("beforeinstallprompt", (e) => {
-    e.preventDefault(); deferredPrompt = e;
-    document.getElementById("installStatus").textContent = "JARVIS готов к установке. Нажми кнопку «Установить».";
+function bindTabs(){
+  document.querySelectorAll(".tab").forEach(el => {
+    el.addEventListener("click", function(){
+      const tab = this.getAttribute("data-tab");
+      if(tab) switchTab(tab);
+    });
   });
-  document.getElementById("installBtn").onclick = async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const result = await deferredPrompt.userChoice;
-      document.getElementById("installStatus").textContent = result.outcome === "accepted" ? "JARVIS установлен." : "Установка отменена.";
-      deferredPrompt = null;
-    } else {
-      alert("Если кнопка не сработала, открой сайт в Safari и выбери «На экран Домой».");
-    }
-  };
-}
-
-function registerSW(){
-  if("serviceWorker" in navigator){
-    navigator.serviceWorker.register("./service-worker.js").catch(console.error);
-  }
-}
-function bindEvents(){
-  document.getElementById("notifyBtn").onclick=requestNotifications;
-  document.getElementById("exportBtn").onclick=()=>exportData();
-  document.getElementById("backupBtn").onclick=backupData;
-  document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
-  document.getElementById("importFile").onchange=e=>{ if(e.target.files[0]) importData(e.target.files[0]); };
-  document.getElementById("demoBtn").onclick=seedData;
-  document.getElementById("newFolderBtn").onclick=clearFolderForm;
-  document.getElementById("saveFolderBtn").onclick=saveFolder;
-  document.getElementById("clearFolderBtn").onclick=clearFolderForm;
-  document.getElementById("parseBtn").onclick=runParse;
-  document.getElementById("saveParsedBtn").onclick=saveParsedDraft;
-  document.getElementById("clearSmartBtn").onclick=clearSmart;
-  document.getElementById("voiceBtn").onclick=startVoice;
-  document.getElementById("stopVoiceBtn").onclick=stopVoice;
-  document.getElementById("searchInput").oninput=renderSearch;
-  document.getElementById("searchType").onchange=renderSearch;
-  document.getElementById("saveSettingsBtn").onclick=saveSettings;
-  document.getElementById("prevMonthBtn").onclick=()=>{ state.ui.calendarMonth--; if(state.ui.calendarMonth<0){ state.ui.calendarMonth=11; state.ui.calendarYear--; } saveState(); renderCalendar(); };
-  document.getElementById("nextMonthBtn").onclick=()=>{ state.ui.calendarMonth++; if(state.ui.calendarMonth>11){ state.ui.calendarMonth=0; state.ui.calendarYear++; } saveState(); renderCalendar(); };
 }
 function renderAll(){
-  renderDashboard(); renderFolders(); renderFolderContent(); renderParsePreview();
-  if(state.ui.selectedTab==="calendar") renderCalendar();
-  if(state.ui.selectedTab==="search") renderSearch();
-  if(state.ui.selectedTab==="settings") renderSettings();
-  switchTab(state.ui.selectedTab || "dashboard");
+  renderToday();
+  renderObjects();
+  renderParsePreview();
+  if(state.ui.tab === "calendar") renderCalendar();
+  if(state.ui.tab === "search") renderSearch();
+  if(state.ui.tab === "settings") renderSettings();
+  switchTab(state.ui.tab || "today");
 }
+
 loadState();
-if(!state.ui.selectedDate) state.ui.selectedDate=toDateInput(today());
-bindTabs(); bindEvents(); setupVoiceInput(); initInstallPrompt(); registerSW(); renderAll(); setInterval(checkReminders, 30000); checkReminders();
+if(!state.ui.calendarDate) state.ui.calendarDate = toDateInput(today());
+bindTabs();
+setupVoice();
+renderAll();
+
+document.getElementById("notifyBtn").onclick = requestNotifications;
+document.getElementById("exportBtn").onclick = exportData;
+document.getElementById("importBtn").onclick = () => document.getElementById("importFile").click();
+document.getElementById("importFile").onchange = e => { if(e.target.files[0]) importData(e.target.files[0]); };
+document.getElementById("demoBtn").onclick = seedData;
+document.getElementById("newObjectBtn").onclick = clearObjectForm;
+document.getElementById("saveObjectBtn").onclick = saveObject;
+document.getElementById("clearObjectBtn").onclick = clearObjectForm;
+document.getElementById("parseBtn").onclick = parseInput;
+document.getElementById("saveParsedBtn").onclick = saveParsed;
+document.getElementById("clearInputBtn").onclick = clearInput;
+document.getElementById("voiceBtn").onclick = startVoice;
+document.getElementById("stopVoiceBtn").onclick = stopVoice;
+document.getElementById("calendarDate").onchange = renderCalendar;
+document.getElementById("searchInput").oninput = renderSearch;
+document.getElementById("searchType").onchange = renderSearch;
+document.getElementById("saveSettingsBtn").onclick = saveSettings;
+
+setInterval(checkReminders, 30000);
+checkReminders();
 </script>
 </body>
 </html>
